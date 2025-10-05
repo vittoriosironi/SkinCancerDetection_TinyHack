@@ -96,6 +96,7 @@ def _save_image(image_stream, original_filename: str, upload_dir: Path) -> Tuple
 
 @app.post("/ingest")
 def ingest():
+    print("\nRicevuta nuova richiesta di ingestione...")
     upload_dir = Path(app.config.get("UPLOAD_DIR", DEFAULT_UPLOAD_DIR))
     upload_dir.mkdir(parents=True, exist_ok=True)
 
