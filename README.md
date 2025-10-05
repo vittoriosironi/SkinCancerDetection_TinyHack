@@ -120,10 +120,10 @@ Source: [ISIC Archive - Collection 212](https://api.isic-archive.com/collections
 
 | Metric | Score |
 |--------|-------|
-| **Accuracy** | TBD |
-| **Precision** | TBD |
-| **Recall** | TBD |
-| **F1-Score** | TBD |
+| **Accuracy** | 76% |
+| **Precision** | 67.99% |
+| **Recall** | 94.01% |
+| **F1-Score** | 76.44% |
 
 </td>
 <td width="50%">
@@ -133,10 +133,9 @@ Source: [ISIC Archive - Collection 212](https://api.isic-archive.com/collections
 
 | Metric | Score |
 |--------|-------|
-| **Accuracy** | 41.21% |
-| **F1 (Macro)** | 54.19% |
-| **F1 (Weighted)** | 40.58% |
-| **Cohen's Kappa** | 0.27 |
+| **Accuracy** | 84.60% |
+| **F1 (Macro)** | 72.80% |
+| **F1 (Weighted)** | 83.40% |
 
 </td>
 </tr>
