@@ -1,7 +1,7 @@
 """Flask server that receives alerts from Nicla Vision and stores incoming images.
 
 Run with:
-    python app.py --host 0.0.0.0 --port 8000
+    python app.py --host 110.100.15.27 --port 8000
 """
 from __future__ import annotations
 
@@ -20,11 +20,57 @@ from typing import Any, Dict, Tuple
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 
+try:
+    from PIL import Image
+    HAS_PIL = True
+except ImportError:
+    HAS_PIL = False
+
 LOGGER = logging.getLogger("nicla.server")
 app = Flask(__name__)
 
 DEFAULT_UPLOAD_DIR = Path(__file__).resolve().parent / "incoming"
 DEFAULT_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def _print_image_to_terminal(image_path: Path, width: int = 80) -> None:
+    """Stampa una preview ASCII dell'immagine nel terminale."""
+    if not HAS_PIL:
+        print("📷 [Immagine ricevuta - installa Pillow per vedere la preview]")
+        return
+    
+    try:
+        img = Image.open(image_path)
+        
+        # Ridimensiona mantenendo aspect ratio
+        aspect_ratio = img.height / img.width
+        height = int(width * aspect_ratio * 0.5)  # 0.5 perché i caratteri sono più alti che larghi
+        img_resized = img.resize((width, height), Image.Resampling.LANCZOS)
+        
+        # Converti in grayscale
+        img_gray = img_resized.convert('L')
+        
+        # Caratteri ASCII dal più scuro al più chiaro
+        ascii_chars = ' .:-=+*#%@'
+        
+        print("\n📷 PREVIEW IMMAGINE:")
+        print("┌" + "─" * width + "┐")
+        
+        for y in range(height):
+            row = "│"
+            for x in range(width):
+                pixel_value = img_gray.getpixel((x, y))
+                # Mappa il valore del pixel (0-255) a un carattere ASCII
+                char_index = int((pixel_value / 255) * (len(ascii_chars) - 1))
+                row += ascii_chars[char_index]
+            row += "│"
+            print(row)
+        
+        print("└" + "─" * width + "┘")
+        print(f"Dimensioni originali: {img.width}x{img.height} px\n")
+        
+    except Exception as e:
+        print(f"⚠️  Impossibile mostrare preview: {e}")
 
 
 def _parse_metadata(metadata_raw: str | None) -> Dict[str, Any]:
@@ -80,6 +126,30 @@ def ingest():
 
     metadata_path = destination.with_suffix(destination.suffix + ".json")
     metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+
+    # Log dettagliato per verificare la comunicazione
+    print("\n" + "=" * 80)
+    print("📸 NUOVA IMMAGINE RICEVUTA!")
+    print("=" * 80)
+    print(f"🆔 Capture ID:       {capture_id}")
+    print(f"📁 File salvato:     {destination.name}")
+    print(f"📊 Dimensione:       {request.content_length:,} bytes ({request.content_length / 1024:.2f} KB)")
+    print(f"🎨 Tipo contenuto:   {image_file.content_type}")
+    print(f"📝 Nome originale:   {image_file.filename}")
+    print(f"⏰ Ricevuto alle:    {received_at}")
+    
+    if metadata.get("device_id"):
+        print(f"🔧 Device ID:        {metadata['device_id']}")
+    if metadata.get("score") is not None:
+        print(f"⚠️  Score sospetto:   {metadata['score']:.3f}")
+    if metadata.get("timestamp"):
+        print(f"⏱️  Timestamp device: {metadata['timestamp']} ms")
+    
+    print(f"💾 Metadata salvati: {metadata_path.name}")
+    print("=" * 80 + "\n")
+    
+    # Stampa preview dell'immagine a terminale
+    _print_image_to_terminal(destination, width=60)
 
     LOGGER.info("Stored capture %s -> %s", capture_id, destination.name)
 
