@@ -110,7 +110,37 @@ Source: [ISIC Archive - Collection 212](https://api.isic-archive.com/collections
 - **Framework**: PyTorch
 
 ### Performance Metrics
-> 📊 **TODO** - Evaluation results will be added after testing completion
+
+<table>
+<tr>
+<td width="50%">
+
+**Edge Model (Nicla Vision)**
+*Binary Classification*
+
+| Metric | Score |
+|--------|-------|
+| **Accuracy** | 76% |
+| **Precision** | 67.99% |
+| **Recall** | 94.01% |
+| **F1-Score** | 76.44% |
+
+</td>
+<td width="50%">
+
+**Server Model (ViT-L/16)**
+*Multi-Class Classification*
+
+| Metric | Score |
+|--------|-------|
+| **Accuracy** | 84.60% |
+| **F1 (Macro)** | 72.80% |
+| **F1 (Weighted)** | 83.40% |
+
+</td>
+</tr>
+</table>
+
 
 ---
 
