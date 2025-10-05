@@ -168,11 +168,17 @@ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:mbed_nicla:nicla_vision sketch
 # Navigate to server directory
 cd server/
 
+# Create venv
+python -m venv venv
+
+# Activate venv
+source venv/bin/activate
+
 # Install dependencies
 pip install -r requirements.txt
 
 # Start Flask server
-python app.py
+python app.py --host 0.0.0.0 --port 8000
 ```
 
 ### 5. Configure WiFi
@@ -180,7 +186,7 @@ Update WiFi credentials in `sketch.ino`:
 ```cpp
 const char* ssid = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
-const char* serverURL = "http://YOUR_SERVER_IP:5000/classify";
+const char* serverURL = "http://YOUR_SERVER_IP:8000/ingest";
 ```
 
 ---
@@ -236,8 +242,15 @@ MelaNoMore/
 │   ├── model_info.json         # Model metadata
 │   └── server/
 │       ├── app.py              # Flask web server
-│       ├── vit_model.py        # Vision Transformer inference
-│       └── requirements.txt    # Python dependencies
+│       ├── classifier.py       # Vision Transformer inference
+│       ├── requirements.txt    # Python dependencies
+│       ├── static/
+|           ├── dashboard.js    # UI of the dashboard
+|           └── style.css       # Style of the UI
+|       ├── templates/
+|           ├── base.html       # Main page
+|           └── dashboard.html  # Dashboard page
+|       └── incoming/           # Directory with photo from MelaNoMore
 │
 ├── docs/
 │   ├── README.md               # Extended documentation
