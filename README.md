@@ -111,7 +111,12 @@ Source: [ISIC Archive - Collection 212](https://api.isic-archive.com/collections
 
 ### Performance Metrics
 
-**Edge Model (Nicla Vision) - Binary Classification:**
+<table>
+<tr>
+<td width="50%">
+
+**Edge Model (Nicla Vision)**
+*Binary Classification*
 
 | Metric | Score |
 |--------|-------|
@@ -120,14 +125,22 @@ Source: [ISIC Archive - Collection 212](https://api.isic-archive.com/collections
 | **Recall** | TBD |
 | **F1-Score** | TBD |
 
-**Server Model (ViT-L/16) - Multi-Class Classification:**
+</td>
+<td width="50%">
+
+**Server Model (ViT-L/16)**
+*Multi-Class Classification*
 
 | Metric | Score |
 |--------|-------|
 | **Accuracy** | 41.21% |
-| **F1-Score (Macro)** | 54.19% |
-| **F1-Score (Weighted)** | 40.58% |
+| **F1 (Macro)** | 54.19% |
+| **F1 (Weighted)** | 40.58% |
 | **Cohen's Kappa** | 0.27 |
+
+</td>
+</tr>
+</table>
 
 
 ---
