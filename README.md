@@ -2,6 +2,12 @@
 
 **AI-Powered Skin Lesion Screening for Clinical Decision Support**
 
+# 🏆 TinyHack Turin 2025 – 1st Place (Winning Project)
+
+This repository contains the prototype developed in 24 hours during the TinyHack Turin 2025 hackathon, awarded 1st place.  
+It is an experimental research prototype for skin lesion image classification.  
+Not a medical device. Not for diagnostic use. Use only for educational and research purposes.
+
 ---
 
 ## Overview
