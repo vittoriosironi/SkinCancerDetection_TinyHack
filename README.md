@@ -265,31 +265,34 @@ const char* serverURL = "http://YOUR_SERVER_IP:8000/ingest";
 ## 📁 Project Structure
 
 ```
-MelaNoMore/
-├── src/
-│   ├── sketch.ino              # Arduino sketch for Nicla Vision
-│   ├── model.onnx              # Edge model (binary classification)
-│   ├── model_info.json         # Model metadata
-│   └── server/
-│       ├── app.py              # Flask web server
-│       ├── classifier.py       # Vision Transformer inference
-│       ├── requirements.txt    # Python dependencies
-│       ├── static/
-|           ├── dashboard.js    # UI of the dashboard
-|           └── style.css       # Style of the UI
-|       ├── templates/
-|           ├── base.html       # Main page
-|           └── dashboard.html  # Dashboard page
-|       └── incoming/           # Directory with photo from MelaNoMore
-│
-├── docs/
-│   ├── README.md               # Extended documentation
-│   └── deployment-guide.md     # Deployment instructions
-│
-├── slides/
-│   └── presentation.pdf        # Project presentation deck
-│
-└── README.md                   # This file
+SkinCancerDetection_TinyHack/
+├── README.md                   # Project overview and documentation
+├── 1st_tier/
+│   └── sketch.ino              # Arduino Nicla Vision firmware (tier-1 classifier)
+├── 2nd_tier/
+│   ├── dataset.py              # Dataset utilities for HAM10000
+│   ├── evaluate.py             # Evaluation pipeline and metrics
+│   ├── metrics.py              # Metric computation helpers
+│   ├── model.py                # Vision Transformer model definition
+│   ├── train.py                # Training entrypoint
+│   ├── visualize.py            # Visual analysis scripts
+│   └── requirements.txt        # Python dependencies for training
+├── server/
+│   ├── app.py                  # Flask server entrypoint
+│   ├── classifier.py           # Tier-2 inference orchestration
+│   ├── requirements.txt        # Runtime dependencies for the server
+│   ├── static/
+│   │   ├── dashboard.js        # Dashboard interactivity
+│   │   └── styles.css          # Dashboard styling
+│   ├── templates/
+│   │   ├── base.html           # Base HTML layout
+│   │   └── dashboard.html      # Dashboard view
+│   ├── models/
+│   │   ├── best_model.pth      # Fine-tuned ViT weights
+│   │   ├── inference_api.py    # Model loading and inference helpers
+│   │   └── INTEGRATION_GUIDE.md  # Deployment/integration notes
+│   └── incoming/               # Uploaded lesion images from the device
+└── venv/                       # (Optional) Local Python virtual environment
 ```
 
 ---
@@ -329,6 +332,12 @@ MelaNoMore/
 - **Arduino Nicla Vision**: [Official Documentation](https://docs.arduino.cc/hardware/nicla-vision)
 - **Z-Ant**: [Beer model timing](https://github.com/ZantFoundation/Z-Ant)
 - **Vision Transformer**: [An Image is Worth 16x16 Words](https://arxiv.org/abs/2010.11929)
+
+---
+
+## 🧠 Model Weights (Not Included)
+
+The fine‑tuned Vision Transformer weights (`best_model.pth`, ~3.4 GB) are **not included** in this repository to keep the codebase small and fast to clone. When the file is absent the application automatically falls back to a mock classifier so you can still run the full ingestion + dashboard flow.
 
 ---
 

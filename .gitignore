@@ -1,1 +1,110 @@
-venv
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python cache and binaries
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Logs and runtime artifacts
+*.log
+*.tmp
+
+# Machine learning artifacts (ignore large/binary weights, keep code & guides)
+*.pkl
+*.pickle
+*.h5
+*.onnx
+*.tflite
+*.mlmodel
+*.joblib
+*.sav
+
+# Model weights inside models directory
+server/models/*.pth
+server/models/*.pt
+server/models/*_weights.bin
+server/models/*_weights.safetensors
+
+# Keep essential model code & docs
+!server/models/inference_api.py
+!server/models/INTEGRATION_GUIDE.md
+!server/models/MODEL_DOWNLOAD.md
+!server/models/download_weights.py
+!server/models/.gitkeep
+
+# Uploaded data (runtime ingestion)
+server/incoming/
+
+# (Optional) local datasets & training outputs
+data/
+dataset/
+datasets/
+raw_data/
+processed_data/
+outputs/
+experiments/
+runs/
+lightning_logs/
+checkpoints/
+
+# Notebooks & checkpoints (adjust if you want them versioned)
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# Python tooling caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Cache dirs
+.cache/
+cache/
+__cache__/
+pip-wheel-metadata/
+
+# IDE / editor settings
+.vscode/
+.idea/
+
+# macOS system files
+.DS_Store
+
+# Node / frontend (future additions)
+node_modules/
+*.tsbuildinfo
+
+# PyInstaller / packaging leftovers
+*.spec
+
+# Temporary / swap / backup
+*.swp
+*.swo
+*.orig
+*.bak
+
+# Logs directory
+logs/
+
+# Arduino build outputs
+*.hex
+*.bin
+
+
+DeployArchive.tar.gz
